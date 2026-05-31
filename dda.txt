@@ -1,0 +1,43 @@
+import matplotlib.pyplot as plt
+def dda_with_slope_cases(x1, y1, x2, y2):
+    dx,dy = x2 - x1,y2 - y1
+    x_points, y_points = [],[]
+    if dx == 0:
+        y_step = 1 if y2 > y1 else -1
+        for y in range(y1, y2 + y_step, y_step):
+            x_points.append(x1)
+            y_points.append(y)
+    elif dy == 0:
+        x_step = 1 if x2 > x1 else -1
+        for x in range(x1, x2 + x_step, x_step):
+            x_points.append(x)
+            y_points.append(y1)
+    else:
+        slope = dy / dx
+        if abs(slope) <= 1:
+            steps = abs(dx)
+            x_increment,y_increment = 1,slope * x_increment
+            x, y = x1,y1
+            for i in range(steps + 1):
+                x_points.append(round(x))
+                y_points.append(round(y))
+                x, y += x_increment,y_increment
+        else:
+            steps = abs(dy)
+            y_increment,x_increment = 1,(1 / slope) * y_increment
+            x,y = x1, y1
+            for i in range(steps + 1):
+                x_points.append(round(x))
+                y_points.append(round(y))
+                x, y += x_increment,y_increment
+    return x_points, y_points
+x1 = int(input("Enter x1: "))
+y1 = int(input("Enter y1: "))
+x2 = int(input("Enter x2: "))
+y2 = int(input("En ter y2: "))
+x_pts, y_pts = dda_with_slope_cases(x1, y1, x2, y2)
+plt.scatter(x_pts, y_pts)
+plt.plot(x_pts, y_pts)
+plt.title("DDA Line Drawing (With Slope Cases)")
+plt.grid(True)
+plt.show()
